@@ -15,6 +15,47 @@ PDF Boss acts as an elite digital toolkit. Capable of parsing, creating, and com
 - Core PDF Libraries: `pdf-lib`, `jspdf`, `docx`, `pptxgenjs`
 - Design/Utility: `Tailwind CSS 4`, `Framer Motion`
 
+## 🏗 System Architecture
+
+PDF Boss is designed as a **client-side only** document processing engine. By keeping all operations within the browser, it ensures zero data transmission, guaranteeing absolute privacy for sensitive documents.
+
+```mermaid
+graph TD
+    User([User]) -- Uploads Document --> UI[React Interface]
+    UI -- Sends File Buffer --> ProcessingEngine[Document Processing Engine]
+    
+    subgraph Client_Side_Processing [Browser Local Execution]
+    ProcessingEngine -- PDF Manipulation --> PDFLib[pdf-lib / jsPDF]
+    ProcessingEngine -- Word Processing --> DOCX[docx module]
+    ProcessingEngine -- Presentations --> PPTX[pptxgenjs]
+    end
+    
+    PDFLib -- Generated Blob --> FileSaver[File-Saver Utility]
+    DOCX -- Generated Blob --> FileSaver
+    PPTX -- Generated Blob --> FileSaver
+    
+    FileSaver -- Triggers Download --> User
+    
+    style Client_Side_Processing fill:#f3e8ff,stroke:#9333ea,stroke-width:2px
+    style UI fill:#e0f2fe,stroke:#0284c7,stroke-width:2px
+```
+
+## 📂 File Structure
+
+```text
+pdf-boss/
+├── public/            # Static assets and favicons
+├── src/
+│   ├── components/    # Reusable UI components (Modals, Dropzones)
+│   ├── pages/         # Core application views (Merge, Split, Convert)
+│   ├── utils/         # Document manipulation logic and helpers
+│   ├── App.jsx        # Main routing and layout wrapper
+│   └── main.jsx       # React application entry point
+├── package.json       # Project dependencies and scripts
+├── tailwind.config.js # Styling configurations
+└── vite.config.js     # Build tool configuration
+```
+
 ## 🚀 Getting Started
 
 ```bash
@@ -45,3 +86,5 @@ npm run dev
 
 ## 👨‍💻 Developer
 **Kartik Shete**
+
+<!-- Doc sync 3 -->
